@@ -1,22 +1,25 @@
 import { readFile } from "fs/promises";
 
 const input = await readFile("input", "utf8");
-const arrInput = input.split("\n");
+const inputArr = input.trim().split("\n");
 
-let position = rotateDial(50, 68, "L");
-console.log(position);
+let position = 50;
+let password = 0;
 
-arrInput.forEach((step) => {
-  const distance = step.slice(1);
+inputArr.forEach((step) => {
+  const direction = step.slice(0, 1);
+  const distance = parseInt(step.slice(1), 10);
+  // console.log(direction, distance);
 
-  if (step.slice(0, 1) === "L") {
-    // console.log(step);
-  } else {
-    // console.log(step);
-  }
+  position = rotateDial(position, direction, distance);
+  // console.log(position);
+
+  if (position === 0) password++;
 });
 
-function rotateDial(currPos, distance, direction) {
+console.log(password);
+
+function rotateDial(currPos, direction, distance) {
   const dialLength = 100;
   const dialArr = Array.from({ length: dialLength }, (_, i) => i);
   let newPosition;
